@@ -91,3 +91,10 @@ python populate_packages:prepend () {
         description='FreeRDP plugin %s',
         prepend=True, extra_depends='')
 }
+
+# http://errors.yoctoproject.org/Errors/Details/766906/
+# freerdp/2.11.2/git/libfreerdp/core/info.c:88:39: error: initialization of 'const WCHAR *' {aka 'const short unsigned int *'} from incompatible pointer type 'BYTE *' {aka 'unsigned char *'} [-Wincompatible-pointer-types]
+# freerdp/2.11.2/git/libfreerdp/core/redirection.c:91:31: error: passing argument 1 of 'redirection_free_data' from incompatible pointer type [-Wincompatible-pointer-types]
+# freerdp/2.11.2/git/libfreerdp/core/redirection.c:112:31: error: assignment to 'BYTE **' {aka 'unsigned char **'} from incompatible pointer type 'char **' [-Wincompatible-pointer-types]
+# freerdp/2.11.2/git/libfreerdp/core/redirection.c:139:38: error: passing argument 1 of 'redirection_copy_data' from incompatible pointer type [-Wincompatible-pointer-types]
+CFLAGS += "-Wno-error=incompatible-pointer-types"
